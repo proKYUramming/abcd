@@ -32,6 +32,12 @@ export default function NovelEditPage() {
     if (!token) { navigate('/login'); return; }
     axios.get(`/api/novels/${id}`)
       .then(res => {
+        let myId = null;
+        try { myId = JSON.parse(atob(token.split('.')[1])).id; } catch {}
+        if (res.data.author_id !== myId) {
+          navigate(`/novels/${id}`);
+          return;
+        }
         const { title, genre, synopsis, content } = res.data;
         setForm({ title, genre, synopsis, content });
       })

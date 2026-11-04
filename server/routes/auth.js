@@ -8,6 +8,9 @@ const router = express.Router();
 // 회원가입
 router.post('/register', async (req, res) => {
   const { email, password, nickname, phone_number, entry_year, student_id } = req.body;
+    if (!email || !password || !nickname || !phone_number || !entry_year || !student_id) {
+      return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
+    }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool.query(

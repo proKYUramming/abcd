@@ -35,17 +35,14 @@ export default function MyPage() {
   useEffect(() => {
     if (!token) { navigate('/login'); return; }
 
-    axios.get('/api/users/me', { headers: { Authorization: `Bearer ${token}` } })
-      .then(res => {
-        setUser(res.data);
-        setForm({ nickname: res.data.nickname, phone_number: res.data.phone_number, password: '' });
-      });
-
-    let myId = null;
-    try { myId = JSON.parse(atob(token.split('.')[1])).id; } catch {}
-
-    axios.get('/api/novels')
-      .then(res => setMyNovels(res.data.filter(n => n.author_id === myId)));
+    Promise.all([
+      axios.get('/api/users/me', { headers: { Authorization: `Bearer ${token}` } }),
+      axios.get('/api/novels')
+    ]).then(([userRes, novelsRes]) => {
+      setUser(userRes.data);
+      setForm({ nickname: userRes.data.nickname, phone_number: userRes.data.phone_number, password: '' });
+      setMyNovels(novelsRes.data.filter(n => n.author_id === userRes.data.id));
+    }).catch(() => navigate('/login'));
   }, []);
 
   async function handleUpdate(e) {

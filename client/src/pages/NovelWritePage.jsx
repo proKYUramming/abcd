@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -27,10 +27,9 @@ export default function NovelWritePage() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
-  if (!token) {
-    navigate('/login');
-    return null;
-  }
+  useEffect(() => {
+    if (!token) navigate('/login');
+  }, []);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });

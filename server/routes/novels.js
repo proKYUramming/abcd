@@ -63,6 +63,9 @@ router.get('/:id', async (req, res) => {
 // 소설 작성 (로그인 필요)
 router.post('/', authMiddleware, async (req, res) => {
   const { title, genre, synopsis, content } = req.body;
+    if (!title || !genre || !synopsis || !content) {
+      return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
+    }
   try {
     const [result] = await pool.query(
       'INSERT INTO novels (title, genre, synopsis, content, author_id) VALUES (?, ?, ?, ?, ?)',
