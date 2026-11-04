@@ -1,6 +1,8 @@
 -- server/schema.sql
 -- DB 이름은 본인 학번으로 변경할 것 (예: novel_platform_10315)
-CREATE DATABASE IF NOT EXISTS novel_platform_학번;
+CREATE DATABASE IF NOT EXISTS novel_platform_학번
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 USE novel_platform_학번;
 
 CREATE TABLE users (
@@ -10,7 +12,7 @@ CREATE TABLE users (
   nickname VARCHAR(50) NOT NULL,
   phone_number VARCHAR(20) NOT NULL UNIQUE,
   entry_year INT NOT NULL,
-  student_id VARCHAR(10) NOT NULL,
+  student_id VARCHAR(10) NOT NULL UNIQUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
