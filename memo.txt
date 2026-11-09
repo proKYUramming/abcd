@@ -185,3 +185,19 @@ CREATE TABLE products (
     -- 외래키 설정(구매자): 구매자 탈퇴 시에도 상품 레코드는 유지하고 구매자 ID만 NULL로 변경 (SET NULL)
     FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+
+
+
+따로 학교에서 해야할것
+
+ 1. server/.env 편집:
+  DB_USER=본인학번
+  DB_PASSWORD=본인DB비밀번호
+  DB_NAME=novel_platform_본인학번
+  2. server/schema.sql 편집: novel_platform_학번 → novel_platform_본인학번
+  3. MySQL에서 server/schema.sql 실행
+  4. 터미널 2개 열어서:
+    - cd server && npm run dev
+    - cd client && npm run dev
+  5. http://localhost:5173 접속
